@@ -1,18 +1,21 @@
-import { load, Agent, LoadOptions, GetOptions, GetResult, hashComponents, componentsToDebugString } from './agent'
-import { BuiltinComponents } from './sources'
-import { Confidence } from './confidence'
-import { Component, UnknownComponents } from './utils/entropy_source'
+import { load, hashComponents, componentsToDebugString } from './agent'
+import type { Agent, LoadOptions, GetOptions, GetResult } from './agent'
+import type { BuiltinComponents } from './sources'
+import type { Confidence } from './confidence'
+import type { Component, UnknownComponents } from './utils/entropy_source'
 import { x64hash128 } from './utils/hashing'
 
 // Exports that are under Semantic versioning
 export {
   load,
+  hashComponents,
+  componentsToDebugString,
+}
+export type {
   Agent,
   LoadOptions,
   GetOptions,
   GetResult,
-  hashComponents,
-  componentsToDebugString,
   Component,
   UnknownComponents,
   BuiltinComponents,
@@ -45,9 +48,11 @@ export {
 } from './utils/browser'
 export {
   loadSources,
+  transformSource, // Not used here but adds only 222 uncompressed (60 compressed) bytes of code
+} from './utils/entropy_source'
+export type {
   Source,
   SourcesToComponents,
-  transformSource, // Not used here but adds only 222 uncompressed (60 compressed) bytes of code
   UnknownSources,
 } from './utils/entropy_source'
 export { withIframe } from './utils/dom'
