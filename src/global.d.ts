@@ -1,7 +1,7 @@
 /* Browser APIs not described by TypeScript */
 
 interface Window {
-  webkitOfflineAudioContext?: OfflineAudioContext
+  webkitOfflineAudioContext?: typeof OfflineAudioContext
   openDatabase?(...args: unknown[]): void
   ApplePaySession?: ApplePaySessionConstructor
   __fpjs_d_m?: unknown

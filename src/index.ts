@@ -1,23 +1,29 @@
-import { load, Agent, LoadOptions, GetOptions, GetResult, hashComponents, componentsToDebugString } from './agent'
-import { BuiltinComponents } from './sources'
-import { Confidence } from './confidence'
-import { Component, UnknownComponents } from './utils/entropy_source'
+import { load, hashComponents, componentsToDebugString } from './agent'
+import type { Agent, LoadOptions, GetOptions, GetResult } from './agent'
+import type { BuiltinComponents } from './sources'
+import type { Confidence } from './confidence'
+import type { Component, UnknownComponents } from './utils/entropy_source'
 import { x64hash128 } from './utils/hashing'
 
-// Exports that are under Semantic versioning
+// Runtime exports
 export {
   load,
+  hashComponents,
+  componentsToDebugString,
+}
+
+// Type exports
+export type {
   Agent,
   LoadOptions,
   GetOptions,
   GetResult,
-  hashComponents,
-  componentsToDebugString,
   Component,
   UnknownComponents,
   BuiltinComponents,
   Confidence,
 }
+
 // The default export is a syntax sugar (`import * as FP from '...' → import FP from '...'`).
 // It should contain all the public exported values.
 export default { load, hashComponents, componentsToDebugString }
@@ -45,9 +51,7 @@ export {
 } from './utils/browser'
 export {
   loadSources,
-  Source,
-  SourcesToComponents,
-  transformSource, // Not used here but adds only 222 uncompressed (60 compressed) bytes of code
-  UnknownSources,
+  transformSource,
 } from './utils/entropy_source'
+export type { Source, SourcesToComponents, UnknownSources } from './utils/entropy_source'
 export { withIframe } from './utils/dom'

@@ -1,4 +1,5 @@
-import { version } from '../package.json'
+// FingerprintJS version
+const version = "5.0.1";
 import { requestIdleCallbackIfAvailable } from './utils/async'
 import { UnknownComponents } from './utils/entropy_source'
 import { x64hash128 } from './utils/hashing'
