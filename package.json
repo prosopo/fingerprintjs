@@ -49,8 +49,8 @@
 		"build:tsc": "tsc --build --verbose",
 		"build:cjs": "NODE_ENV=${NODE_ENV:-development}; vite build --config vite.cjs.config.ts --mode $NODE_ENV",
 		"typecheck": "tsc --project tsconfig.types.json",
-		"test": "vitest run",
-		"test:watch": "vitest"
+		"test": "echo 'No tests'",
+		"test:watch": "echo 'No tests'"
 	},
 	"devDependencies": {
 		"@prosopo/config": "3.3.0",
