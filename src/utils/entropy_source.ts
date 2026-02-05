@@ -81,7 +81,7 @@ export function loadSource<TOptions, TValue>(
 
         // Source loaded with the final result
         if (isFinalResultLoaded(loadResult)) {
-          return resolveLoad(() => ({ value: loadResult, duration: loadDuration }))
+          return resolveLoad(() => ({ value: loadResult as TValue, duration: loadDuration }))
         }
 
         // Source loaded with "get" stage
@@ -99,7 +99,7 @@ export function loadSource<TOptions, TValue>(
                 }
 
                 // Source getting succeeded
-                resolveGet({ value: getArgs[1], duration })
+                resolveGet({ value: getArgs[1] as TValue, duration })
               })
             }),
         )
