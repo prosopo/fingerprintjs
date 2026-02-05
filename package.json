@@ -1,5 +1,5 @@
 {
-	"name": "@aspect-build/fingerprintjs",
+	"name": "@prosopo/fingerprintjs",
 	"description": "Browser fingerprinting library with the highest accuracy and stability",
 	"version": "5.0.1",
 	"keywords": [
