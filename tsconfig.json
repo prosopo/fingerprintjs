@@ -17,6 +17,13 @@
 		"src/**/*.tsx",
 		"src/**/*.d.ts"
 	],
+	"exclude": [
+		"**/*.test.ts",
+		"**/*.spec.ts",
+		"tests/**/*",
+		"vitest.setup.ts",
+		"vitest.config.ts"
+	],
 	"references": [
 		{
 			"path": "../../dev/config/tsconfig.json"
