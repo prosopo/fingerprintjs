@@ -8,8 +8,7 @@ describe('Sources', () => {
       const flavors = getVendorFlavors()
       expect(flavors).toBeInstanceOf(Array)
       for (let i = 0; i < flavors.length; ++i) {
-        expect(typeof flavors[i])
-          .withContext(`The item #${i}`)
+        expect(typeof flavors[i], `The item #${i}`)
           .toBe('string')
       }
     })

@@ -30,8 +30,7 @@ describe('Sources', () => {
       it('has no complex selectors', () => {
         for (const selector of selectors) {
           const selectorWithNoAllowedSpaces = selector.trim().replace(/\[.*?\]/g, '[]')
-          expect(selectorWithNoAllowedSpaces)
-            .withContext(`Unexpected complex selector '${selector}'`)
+          expect(selectorWithNoAllowedSpaces, `Unexpected complex selector '${selector}'`)
             .not.toContain(' ')
         }
       })
@@ -41,12 +40,10 @@ describe('Sources', () => {
           const [, attributes] = parseSimpleCssSelector(selector)
           for (const name of Object.keys(attributes)) {
             if (name !== 'class') {
-              expect(attributes[name].length)
-                .withContext(
-                  `Selector '${selector}' has a duplicating attribute '${name}'. ` +
-                    `Please rewrite it so that the attribute doesn't repeat ` +
-                    `and a DOM element created from the rewritten selector matches the original selector.`,
-                )
+              expect(attributes[name].length,
+                `Selector '${selector}' has a duplicating attribute '${name}'. ` +
+                  `Please rewrite it so that the attribute doesn't repeat ` +
+                  `and a DOM element created from the rewritten selector matches the original selector.`)
                 .toBeLessThanOrEqual(1)
             }
           }
@@ -57,7 +54,7 @@ describe('Sources', () => {
         const uniqueSelectors = new Set<string>()
 
         for (const selector of selectors) {
-          expect(uniqueSelectors).withContext(`Duplicating selector '${selector}'`).not.toContain(selector)
+          expect(uniqueSelectors, `Duplicating selector '${selector}'`).not.toContain(selector)
           uniqueSelectors.add(selector)
         }
       })
@@ -82,9 +79,8 @@ describe('Sources', () => {
             }
           }
 
-          expect(includesElement)
-            .withContext(`Can't make an element that matches the '${selector}' selector`)
-            .toBeTrue()
+          expect(includesElement, `Can't make an element that matches the '${selector}' selector`)
+            .toBe(true)
         }
       })
     })
@@ -102,10 +98,8 @@ describe('Sources', () => {
         return
       }
 
-      expect(await getDomBlockers())
-        .withContext(
-          'The browser must have no content blocked in tests. Please disable the content blockers for Karma.',
-        )
+      expect(await getDomBlockers(),
+        'The browser must have no content blocked in tests. Please disable the content blockers for Karma.')
         .toEqual([])
     })
 
