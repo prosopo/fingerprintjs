@@ -14,13 +14,9 @@ export interface Confidence {
   comment?: string
 }
 
-export const commentTemplate =
-  '$ if upgrade to Pro: https://fingerprint.com/github/?utm_source=oss&utm_medium=referral&utm_campaign=confidence_score'
-
 export default function getConfidence(components: Pick<BuiltinComponents, 'platform'>): Confidence {
   const openConfidenceScore = getOpenConfidenceScore(components)
-  const proConfidenceScore = deriveProConfidenceScore(openConfidenceScore)
-  return { score: openConfidenceScore, comment: commentTemplate.replace(/\$/g, `${proConfidenceScore}`) }
+  return { score: openConfidenceScore }
 }
 
 function getOpenConfidenceScore(components: Pick<BuiltinComponents, 'platform'>): number {
@@ -58,8 +54,4 @@ function getOpenConfidenceScore(components: Pick<BuiltinComponents, 'platform'>)
 
   // Another platform, e.g. a desktop Linux. It's rare, so it should be pretty unique.
   return 0.7
-}
-
-function deriveProConfidenceScore(openConfidenceScore: number): number {
-  return round(0.99 + 0.01 * openConfidenceScore, 0.0001)
 }

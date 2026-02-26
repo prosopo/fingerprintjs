@@ -202,10 +202,7 @@ function monitor() {
  * Builds an instance of Agent and waits a delay required for a proper operation.
  */
 export async function load(options: Readonly<LoadOptions> = {}): Promise<Agent> {
-  const { delayFallback, debug, monitoring = true } = options
-  if (monitoring) {
-    monitor()
-  }
+  const { delayFallback, debug, monitoring = false } = options
   await prepareForSources(delayFallback)
   const getComponents = loadBuiltinSources({ cache: {}, debug })
   return makeAgent(getComponents, debug)
