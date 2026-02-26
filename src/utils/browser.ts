@@ -162,6 +162,63 @@ export function isGecko(): boolean {
 }
 
 /**
+ * Checks whether the browser is based on Gecko version ≥120 (Firefox ≥120) without using user-agent.
+ * It doesn't check that the browser is based on Gecko; there is a separate function for this.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/120 Firefox 120 release notes
+ */
+export function isGecko120OrNewer(): boolean {
+  // Checked in Firefox 119 vs. Firefox 120+
+  const w = window
+  const n = navigator
+  const { CSS } = w
+
+  // We use a threshold of 3 out of 4 because `globalPrivacyControl` was added in Firefox 120 on desktop,
+  // but only in Firefox 122 on mobile. Using >= 3 ensures detection works on both platforms for Firefox 120+.
+  // @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/globalPrivacyControl#browser_compatibility
+  return (
+    countTruthy([
+      // User Activation API - added in Firefox 120
+      'userActivation' in n,
+      // CSS light-dark() function - added in Firefox 120
+      CSS.supports('color', 'light-dark(#000, #fff)'),
+      // CSS lh unit - added in Firefox 120
+      CSS.supports('height', '1lh'),
+      // Global Privacy Control - added in Firefox 120 (desktop) / Firefox 122 (mobile)
+      'globalPrivacyControl' in n,
+    ]) >= 3
+  )
+}
+
+/**
+ * Checks whether the browser is based on Gecko version ≥143 (Firefox ≥143) without using user-agent.
+ * It doesn't check that the browser is based on Gecko; there is a separate function for this.
+ *
+ * Firefox 143 shipped Phase 2 fingerprinting protections (screen resolution, processor count, touch points)
+ * in Private Browsing and ETP Strict mode.
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Mozilla/Firefox/Releases/143 Firefox 143 release notes
+ * @see https://bugzilla.mozilla.org/show_bug.cgi?id=1978414 Bug that shipped these protections
+ */
+export function isGecko143OrNewer(): boolean {
+  // Checked in Firefox 142 vs. Firefox 143+
+  const { CSS } = window
+
+  return (
+    countTruthy([
+      // CSS ::details-content pseudo-element - added in Firefox 143
+      CSS.supports('selector(::details-content)'),
+      // CSS ::before::marker nested pseudo-element - added in Firefox 143
+      CSS.supports('selector(::before::marker)'),
+      // CSS ::after::marker nested pseudo-element - added in Firefox 143
+      CSS.supports('selector(::after::marker)'),
+      // CompositionEvent.locale property - removed in Firefox 143 (Bug 1700969)
+      !('locale' in CompositionEvent.prototype),
+    ]) >= 3
+  )
+}
+
+/**
  * Checks whether the browser is based on Chromium version ≥86 without using user-agent.
  * It doesn't check that the browser is based on Chromium, there is a separate function for this.
  */

@@ -1,4 +1,4 @@
-import { getBrowserMajorVersion, isSafari, withMockProperties } from '../../tests/utils'
+import { getBrowserMajorVersion, isGecko, isSafari, withMockProperties } from '../../tests/utils'
 import getScreenFrame, {
   FrameSize,
   getUnstableScreenFrame,
@@ -189,5 +189,9 @@ describe('Sources', () => {
 })
 
 function shouldTurnOff() {
-  return isSafari() && (getBrowserMajorVersion() ?? 0) >= 17
+  const browserVersion = getBrowserMajorVersion() ?? 0
+  const isSafari17OrNewer = isSafari() && browserVersion >= 17
+  const isFirefox143OrNewer = isGecko() && browserVersion >= 143
+
+  return isSafari17OrNewer || isFirefox143OrNewer
 }

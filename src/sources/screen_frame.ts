@@ -1,5 +1,13 @@
 import { replaceNaN, round, toFloat } from '../utils/data'
-import { exitFullscreen, getFullscreenElement, isSafariWebKit, isWebKit, isWebKit616OrNewer } from '../utils/browser'
+import {
+  exitFullscreen,
+  getFullscreenElement,
+  isGecko,
+  isGecko143OrNewer,
+  isSafariWebKit,
+  isWebKit,
+  isWebKit616OrNewer,
+} from '../utils/browser'
 
 /**
  * The order matches the CSS side order: top, right, bottom, left.
@@ -89,10 +97,17 @@ export function getUnstableScreenFrame(): () => Promise<FrameSize> {
  * Sometimes the available screen resolution changes a bit, e.g. 1900x1440 → 1900x1439. A possible reason: macOS Dock
  * shrinks to fit more icons when there is too little space. The rounding is used to mitigate the difference.
  *
- * The frame width is always 0 in private mode of Safari 17, so the frame is not used in Safari 17.
+ * The frame width is always 0 in the private mode of Safari 17, so the frame is not used in Safari 17.
+ * Firefox 143+ spoofs screen frame (ScreenAvailRect) in private browsing and strict ETP mode,
+ * so the frame is not used in Firefox 143+.
+ *
+ * @see https://bugzilla.mozilla.org/show_bug.cgi?id=1978414 Firefox screen resolution spoofing
  */
 export default function getScreenFrame(): () => Promise<FrameSize | undefined> {
-  if (isWebKit() && isWebKit616OrNewer() && isSafariWebKit()) {
+  const isSafari17OrAbove = isWebKit() && isWebKit616OrNewer() && isSafariWebKit()
+  const isFirefox143OrAbove = isGecko() && isGecko143OrNewer()
+
+  if (isSafari17OrAbove || isFirefox143OrAbove) {
     return () => Promise.resolve(undefined)
   }
 
