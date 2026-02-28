@@ -11,19 +11,19 @@ describe('Confidence', () => {
     const confidence = getConfidence(components as Pick<SourcesToComponents<{ platform: () => string; }>, "platform">)
 
     if (isAndroid()) {
-      expect(confidence).toEqual({ score: 0.4, comment: commentTemplate.replace(/\$/g, '0.994') })
+      expect(confidence).toEqual({ score: 0.4 })
     } else if (isSafari()) {
       if (isMobile() || isTablet() || (getBrowserMajorVersion() ?? 0) >= 17) {
-        expect(confidence).toEqual({ score: 0.3, comment: commentTemplate.replace(/\$/g, '0.993') })
+        expect(confidence).toEqual({ score: 0.3 })
       } else {
-        expect(confidence).toEqual({ score: 0.5, comment: commentTemplate.replace(/\$/g, '0.995') })
+        expect(confidence).toEqual({ score: 0.5 })
       }
     } else if (isWindows()) {
-      expect(confidence).toEqual({ score: 0.6, comment: commentTemplate.replace(/\$/g, '0.996') })
+      expect(confidence).toEqual({ score: 0.6 })
     } else if (isMacOS()) {
-      expect(confidence).toEqual({ score: 0.5, comment: commentTemplate.replace(/\$/g, '0.995') })
+      expect(confidence).toEqual({ score: 0.5})
     } else {
-      expect(confidence).toEqual({ score: 0.7, comment: commentTemplate.replace(/\$/g, '0.997') })
+      expect(confidence).toEqual({ score: 0.7 })
     }
   })
 })

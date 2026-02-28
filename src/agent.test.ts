@@ -1,8 +1,8 @@
 import { version } from '../package.json'
-import { load as loadAgent } from './agent'
-import { sources } from './sources'
-import { isSourceLoaded } from './sources/cpu_class'
-import { wait } from './utils/async'
+import { load as loadAgent } from './agent.js'
+import { sources } from './sources/index.js'
+import { isSourceLoaded } from './sources/cpu_class.js'
+import { wait } from './utils/async.js'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Mock } from 'vitest'
 
@@ -13,7 +13,6 @@ describe('Agent', () => {
     expect(typeof result.visitorId).toBe('string')
     expect(result.visitorId).not.toEqual('')
     expect(typeof result.confidence.score).toBe('number')
-    expect(typeof result.confidence.comment).toBe('string')
     expect(result.version).toBe(version)
 
     const expectedComponents = Object.keys(sources).sort() as Array<keyof typeof sources>
@@ -21,7 +20,7 @@ describe('Agent', () => {
     expect(Object.keys(result.components).sort()).toEqual(expectedComponents)
     for (const componentName of expectedComponents) {
       const component = result.components[componentName]
-      expect('error' in component ? component.error : undefined, `Unexpected error in the "${componentName}" component`)
+      expect('error' in component ? component.error : undefined, `Unexpected error in the component`)
         .toBeUndefined()
     }
   })
@@ -38,45 +37,5 @@ describe('Agent', () => {
     expect(isSourceLoaded.x, 'Entropy sources are not loaded').toBe(true)
     await agent.get() // To wait until the background processes complete
   })
-
-  describe('monitoring option', () => {
-    let mockXHR: {
-      open: Mock
-      send: Mock
-    }
-    let xmlHttpRequestSpy: ReturnType<typeof vi.spyOn>
-
-    beforeEach(() => {
-      mockXHR = {
-        open: vi.fn(),
-        send: vi.fn(),
-      }
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      xmlHttpRequestSpy = vi.spyOn(window as any, 'XMLHttpRequest').mockReturnValue(mockXHR as any)
-    })
-
-    it('respects the monitoring option when set to false', async () => {
-      vi.spyOn(Math, 'random').mockReturnValue(0)
-      const agent = await loadAgent({ delayFallback: 0, monitoring: false })
-      await agent.get()
-
-      expect(xmlHttpRequestSpy).not.toHaveBeenCalled()
-      expect(mockXHR.open).not.toHaveBeenCalled()
-      expect(mockXHR.send).not.toHaveBeenCalled()
-    })
-
-    it('enables monitoring by default and when explicitly set to true', async () => {
-      vi.spyOn(Math, 'random').mockReturnValue(0)
-      const agent = await loadAgent({ delayFallback: 0 })
-      await agent.get()
-
-      expect(xmlHttpRequestSpy).toHaveBeenCalled()
-      expect(mockXHR.open).toHaveBeenCalledWith(
-        'get',
-        expect.stringMatching(/fingerprintjs\/v.*\/npm-monitoring/),
-        true,
-      )
-      expect(mockXHR.send).toHaveBeenCalled()
-    })
-  })
+  
 })
