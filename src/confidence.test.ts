@@ -1,7 +1,7 @@
 import { getBrowserMajorVersion, isAndroid, isMacOS, isMobile, isSafari, isTablet, isWindows } from '../tests/utils'
 import { loadSources, SourcesToComponents } from './utils/entropy_source.js'
 import getPlatform from './sources/platform.js'
-import getConfidence, { commentTemplate } from './confidence.js'
+import getConfidence from './confidence.js'
 import { describe, expect, it } from 'vitest'
 
 describe('Confidence', () => {
