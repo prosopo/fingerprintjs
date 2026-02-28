@@ -2,6 +2,10 @@
   "name": "@fingerprintjs/fingerprintjs",
   "description": "Browser fingerprinting library with the highest accuracy and stability",
   "version": "5.1.0",
+  	"engines": {
+		"node": "^24",
+		"npm": "^11"
+	},
   "keywords": [
     "fraud",
     "fraud detection",
