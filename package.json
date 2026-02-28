@@ -37,11 +37,13 @@
   ],
   "scripts": {
     "build": "rimraf dist && rollup -c rollup.config.ts --configPlugin \"@rollup/plugin-typescript={tsconfig:'tsconfig.rollupConfig.json'}\"",
+    "build:tsc": "tsc --build --verbose",
     "build:watch": "yarn build --watch",
     "playground:start": "cd playground && webpack-dev-server --mode development",
     "playground:build": "cd playground && webpack --mode production",
     "lint": "eslint --ext .js,.ts --ignore-path .gitignore --max-warnings 0 .",
     "lint:fix": "yarn lint --fix",
+    "test": "NODE_ENV=${NODE_ENV:-test}; npx vitest run --config ./vite.test.config.ts --mode $NODE_ENV",
     "test:local": "karma start --preset local --single-run",
     "test:browserstack": "karma start --preset browserstack --single-run",
     "test:browserstack:beta": "karma start --preset browserstack-beta --single-run",
