@@ -1,5 +1,6 @@
 import { withMockProperties } from '../../tests/utils'
 import getUserAgentData from './user_agent_data'
+import { describe, expect, it } from 'vitest'
 
 describe('Sources', () => {
   describe('userAgentData', () => {
@@ -195,7 +196,7 @@ describe('Sources', () => {
         },
       }
       await withMockProperties(navigator, { userAgentData: { get: () => mockUAData } }, async () => {
-        await expectAsync(getUserAgentData()).toBeRejectedWith(unexpectedError)
+        await expect(getUserAgentData()).rejects.toBe(unexpectedError)
       })
     })
   })
