@@ -53,7 +53,7 @@
 		"test:watch": "NODE_ENV=${NODE_ENV:-test}; npx vitest --config ./vitest.config.ts"
 	},
 	"devDependencies": {
-		"@prosopo/config": "3.3.0",
+		"@prosopo/config": "3.3.1",
 		"@types/node": "22.10.2",
 		"@vitest/coverage-v8": "3.2.4",
 		"concurrently": "9.0.1",
