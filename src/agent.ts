@@ -1,5 +1,5 @@
 // FingerprintJS version
-const version = "5.1.0";
+const version = "5.2.0";
 import { requestIdleCallbackIfAvailable } from './utils/async'
 import { UnknownComponents } from './utils/entropy_source'
 import { x64hash128 } from './utils/hashing'
