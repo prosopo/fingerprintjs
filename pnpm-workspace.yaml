@@ -1,0 +1,3 @@
+# pnpm settings (single-package repo; no workspace members)
+allowBuilds:
+  esbuild: true

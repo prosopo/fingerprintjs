@@ -5,8 +5,9 @@
   "private": true,
   "engines": {
     "node": "^24",
-    "npm": "^11"
+    "pnpm": ">=11"
   },
+  "packageManager": "pnpm@11.6.0",
   "keywords": [
     "fraud",
     "fraud detection",
@@ -45,7 +46,7 @@
 	],
 	"scripts": {
 		"clean": "del-cli --verbose dist tsconfig.tsbuildinfo",
-		"build": "npm run build:cross-env -- --mode ${NODE_ENV:-development}",
+		"build": "pnpm run build:cross-env -- --mode ${NODE_ENV:-development}",
 		"build:cross-env": "vite build --config vite.esm.config.ts",
 		"build:tsc": "tsc --build --verbose",
 		"build:cjs": "NODE_ENV=${NODE_ENV:-development}; vite build --config vite.cjs.config.ts --mode $NODE_ENV",
