@@ -4,7 +4,8 @@
 		"emitDeclarationOnly": true,
 		"declaration": true,
 		"declarationMap": true,
-		"composite": false
+		"composite": false,
+		"declarationDir": "./dist/types"
 	},
 	"exclude": [
 		"**/*.test.ts",

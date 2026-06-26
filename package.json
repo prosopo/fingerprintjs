@@ -1,26 +1,26 @@
 {
-  "name": "@prosopo/fingerprintjs",
-  "description": "Browser fingerprinting library with the highest accuracy and stability",
-  "version": "5.2.0",
-  "private": true,
-  "engines": {
-    "node": "^24",
-    "npm": "^11"
-  },
-  "keywords": [
-    "fraud",
-    "fraud detection",
-    "fraud prevention",
-    "browser",
-    "identification",
-    "fingerprint",
-    "fingerprinting",
-    "browser fingerprint",
-    "device fingerprint",
-    "privacy"
-  ],
-  "author": "FingerprintJS, Inc (https://fingerprint.com)",
-  "license": "MIT",
+	"name": "@prosopo/fingerprintjs",
+	"description": "Browser fingerprinting library with the highest accuracy and stability",
+	"version": "5.2.0",
+	"private": true,
+	"engines": {
+		"node": "^24",
+		"npm": "^11"
+	},
+	"keywords": [
+		"fraud",
+		"fraud detection",
+		"fraud prevention",
+		"browser",
+		"identification",
+		"fingerprint",
+		"fingerprinting",
+		"browser fingerprint",
+		"device fingerprint",
+		"privacy"
+	],
+	"author": "FingerprintJS, Inc (https://fingerprint.com)",
+	"license": "MIT",
 	"repository": {
 		"type": "git",
 		"url": "git+ssh://git@github.com/prosopo/captcha.git"
@@ -28,15 +28,15 @@
 	"bugs": {
 		"url": "https://github.com/prosopo/captcha/issues"
 	},
-  "homepage": "https://github.com/fingerprintjs/fingerprintjs",
-	"main": "dist/index.js",
-	"types": "dist/index.d.ts",
-  	"type": "module",
+	"homepage": "https://github.com/fingerprintjs/fingerprintjs",
+	"main": "dist/vite/esm/index.js",
+	"types": "dist/types/index.d.ts",
+	"type": "module",
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"import": "./dist/index.js",
-			"require": "./dist/cjs/index.cjs"
+			"types": "./dist/types/index.d.ts",
+			"import": "./dist/vite/esm/index.js",
+			"require": "./dist/vite/cjs/index.cjs"
 		}
 	},
 	"sideEffects": false,
@@ -44,17 +44,21 @@
 		"dist"
 	],
 	"scripts": {
-		"clean": "del-cli --verbose dist tsconfig.tsbuildinfo",
-		"build": "npm run build:cross-env -- --mode ${NODE_ENV:-development}",
-		"build:cross-env": "vite build --config vite.esm.config.ts",
-		"build:tsc": "tsc --build --verbose",
+		"build": "npm run build:esm",
+		"build:esm": "NODE_ENV=${NODE_ENV:-development}; vite build --config vite.esm.config.ts --mode $NODE_ENV",
 		"build:cjs": "NODE_ENV=${NODE_ENV:-development}; vite build --config vite.cjs.config.ts --mode $NODE_ENV",
-		"typecheck": "tsc --project tsconfig.types.json",
+		"build:types": "tsc -p tsconfig.types.json",
+		"build:tsc": "tsc --build --verbose tsconfig.json",
+		"build:bundle": "echo \"@prosopo/fingerprintjs: no bundle build (not supported for this package)\"",
+		"build:bundle:es": "echo \"@prosopo/fingerprintjs: no es bundle build (not supported for this package)\"",
+		"build:bundle:iife": "echo \"@prosopo/fingerprintjs: no iife bundle build (not supported for this package)\"",
+		"build:bundle:webpack": "echo \"@prosopo/fingerprintjs: no webpack bundle build (not supported for this package)\"",
+		"clean": "del-cli --verbose dist tsconfig.tsbuildinfo",
 		"test": "NODE_ENV=${NODE_ENV:-test}; npx vitest run --config ./vitest.config.ts",
 		"test:watch": "NODE_ENV=${NODE_ENV:-test}; npx vitest --config ./vitest.config.ts"
 	},
 	"devDependencies": {
-		"@prosopo/config": "3.3.1",
+		"@prosopo/config": "3.3.4",
 		"@types/node": "22.10.2",
 		"@vitest/coverage-v8": "3.2.4",
 		"concurrently": "9.0.1",
