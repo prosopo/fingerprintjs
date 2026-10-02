@@ -4,8 +4,7 @@
   "version": "5.2.0",
   "private": true,
   "engines": {
-    "node": "^24",
-    "npm": "^11"
+    "node": "^24"
   },
   "keywords": [
     "fraud",
@@ -45,16 +44,16 @@
 	],
 	"scripts": {
 		"clean": "del-cli --verbose dist tsconfig.tsbuildinfo",
-		"build": "npm run build:cross-env -- --mode ${NODE_ENV:-development}",
+		"build": "pnpm run build:cross-env --mode ${NODE_ENV:-development}",
 		"build:cross-env": "vite build --config vite.esm.config.ts",
 		"build:tsc": "tsc --build --verbose",
 		"build:cjs": "NODE_ENV=${NODE_ENV:-development}; vite build --config vite.cjs.config.ts --mode $NODE_ENV",
 		"typecheck": "tsc --project tsconfig.types.json",
-		"test": "NODE_ENV=${NODE_ENV:-test}; npx vitest run --config ./vitest.config.ts",
-		"test:watch": "NODE_ENV=${NODE_ENV:-test}; npx vitest --config ./vitest.config.ts"
+		"test": "NODE_ENV=${NODE_ENV:-test}; pnpm exec vitest run --config ./vitest.config.ts",
+		"test:watch": "NODE_ENV=${NODE_ENV:-test}; pnpm exec vitest --config ./vitest.config.ts"
 	},
 	"devDependencies": {
-		"@prosopo/config": "3.3.3",
+		"@prosopo/config": "workspace:*",
 		"@types/node": "22.10.2",
 		"@vitest/coverage-v8": "4.1.10",
 		"concurrently": "9.0.1",
@@ -65,6 +64,7 @@
 		"tslib": "2.7.0",
 		"tsx": "4.20.3",
 		"typescript": "5.6.2",
+		"ua-parser-js": "0.7.41",
 		"vite": "6.4.1",
 		"vitest": "4.1.10"
 	}
