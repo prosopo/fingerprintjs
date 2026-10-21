@@ -59,7 +59,7 @@ describe('Sources', () => {
       expect(result.length).toBeGreaterThan(0)
     })
 
-    it('return stable values', async () => {
+    it('detects once and reuses the answer', async () => {
       // The result is unstable in Firefox 89 on BrowserStack Automate
       if (isGecko() && getBrowserMajorVersion() === 89) {
         return
@@ -69,6 +69,7 @@ describe('Sources', () => {
       const second = await getFonts()
 
       expect(second).toEqual(first)
+      expect(second).toBe(first)
     })
   })
 })
