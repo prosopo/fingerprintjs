@@ -1,5 +1,6 @@
 import { loadSources, SourcesToComponents } from '../utils/entropy_source'
 import getAudioFingerprint from './audio'
+import getDeviceBucket from './device_bucket'
 import getFonts from './fonts'
 import getPlugins from './plugins'
 import getCanvasFingerprint from './canvas'
@@ -59,6 +60,7 @@ export const sources = {
   // The asynchronous sources are at the start to run in parallel with other sources.
   userAgentData: getUserAgentData,
   fonts: getFonts,
+  deviceBucket: getDeviceBucket,
   domBlockers: getDomBlockers,
   fontPreferences: getFontPreferences,
   audio: getAudioFingerprint,

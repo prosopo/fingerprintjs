@@ -67,8 +67,27 @@ const fontList = [
   'ZWAdobeF',
 ] as const
 
-// kudos to http://www.lalit.org/lab/javascript-css-font-detect/
+let pending: Promise<string[]> | undefined
+
+/**
+ * Two sources need the font list — `fonts` and `deviceBucket` — and they are
+ * started concurrently, so without this each would build its own iframe and
+ * lay out 150 spans in it. The installed fonts cannot change while the page is
+ * open, so the first call's answer serves both. A rejection is not kept, to
+ * leave a later call able to succeed.
+ */
 export default function getFonts(): Promise<string[]> {
+  if (!pending) {
+    pending = detectFonts()
+    pending.catch(() => {
+      pending = undefined
+    })
+  }
+  return pending
+}
+
+// kudos to http://www.lalit.org/lab/javascript-css-font-detect/
+function detectFonts(): Promise<string[]> {
   // Running the script in an iframe makes it not affect the page look and not be affected by the page CSS. See:
   // https://github.com/fingerprintjs/fingerprintjs/issues/592
   // https://github.com/fingerprintjs/fingerprintjs/issues/628
